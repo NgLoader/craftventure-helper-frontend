@@ -20,7 +20,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
 import { AsyncImageModule } from '../shared/async-image/async-image.module';
-import { MarkdownModule } from 'ngx-markdown';
 import { FroalaViewModule } from 'angular-froala-wysiwyg';
 import { ContentRoutingModule } from './content-routing.module';
 
@@ -45,7 +44,6 @@ import { ContentRoutingModule } from './content-routing.module';
     MatCheckboxModule,
     MatStepperModule,
     MatTabsModule,
-    MarkdownModule,
     FroalaViewModule
   ],
   exports: [ListComponent, ViewComponent]
