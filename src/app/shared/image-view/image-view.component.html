@@ -1,0 +1,25 @@
+<div class="cards">
+	<div *ngFor='let element of this.content'>
+		<div
+			class="flip"
+			[ngClass]="element.flipped ? ['flipped'] : ''">
+			<ng-container *ngTemplateOutlet="card;context:{side:'front', element:element.front}"></ng-container>
+			<ng-container *ngTemplateOutlet="card;context:{side:'back', element:element.back}"></ng-container>
+		</div>
+	</div>
+</div>
+
+<ng-template #card let-side="side" let-element="element">
+	<mat-card
+		*ngIf='element && (element.canView == undefined || element.canView())'
+		[ngClass]="element.parent.back != undefined ? ['card', side] : ['card']"
+		(click)='element.leftClick && element.leftClick($event, element)'
+		[routerLink]='element.routerLink'
+		[id]='element.id'
+		[class]='element.class'>
+		<mat-card-header>
+			<mat-card-title *ngIf="element.name">{{element.name}}</mat-card-title>
+		</mat-card-header>
+		<app-async-image mat-card-image [src]="element.image" [alt]=""></app-async-image>
+	</mat-card>
+</ng-template>

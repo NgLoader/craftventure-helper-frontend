@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Wähle ein design aus</h1>
+<div mat-dialog-content class="theme-select">
+	<mat-form-field>
+		<mat-label>Desing</mat-label>
+		<mat-select [(value)]="selected" (selectionChange)="this.onSelectionChanged($event)">
+			<mat-option *ngFor="let theme of this.themes" [value]="theme.className">{{theme.name}}</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<mat-checkbox [checked]="this.themeService.matBackground" (change)="this.onBackgroundChanged($event)">Background</mat-checkbox>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCloseClick()">Abbruch</button>
+  <button mat-button (click)="onApplyClick()">Übernehmen</button>
+</div>

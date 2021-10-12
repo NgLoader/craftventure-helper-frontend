@@ -1,0 +1,58 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  /*margin-top: 10px;*/
+}
+
+.element {
+  display: flex;
+  flex: 1;
+  text-align: center;
+  justify-content: center;
+}
+
+.element > * {
+  text-decoration: none;
+  color: white;
+}
+
+.creator {
+  justify-content: flex-start;
+}
+
+.creator .love {
+  font-size: 14px;
+  align-self: center;
+  padding: 2px;
+}
+
+.craftventure > * {
+  display: flex;
+  justify-content: center;
+}
+
+.craftventure h1 {
+  align-self: center;
+  margin: 10px;
+}
+
+.craftventure img {
+  height: 50px;
+  width: 50px;
+}
+
+.imprint {
+  justify-content: flex-end;
+  text-align: end;
+}
+
+@media screen and (max-width: 720px) {
+  .footer {
+    height: 168px;
+    flex-direction: column;
+  }
+  .element {
+    align-items: center !important;
+  }
+}

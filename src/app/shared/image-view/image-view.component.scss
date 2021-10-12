@@ -1,0 +1,51 @@
+.card-title {
+  font-size: 1.8em;
+  text-transform: capitalize;
+  padding: 1%;
+  text-align: center;
+  outline: 0;
+}
+
+app-async-image {
+  width: 380px;
+  height: 180px;
+}
+
+.card {
+  outline: 0;
+  cursor: pointer;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto !important;
+  text-align: center;
+  justify-content: center;
+}
+
+.flip {
+  max-width: fit-content;
+  margin: 10px 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  transition: transform 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.front {
+  position: absolute;
+}
+
+.front, .back {
+  margin: 0;
+  z-index: 1;
+  backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.back, .flipped {
+  transform: rotateY(180deg);
+}
+

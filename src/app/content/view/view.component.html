@@ -1,0 +1,58 @@
+<div *ngIf='this.element; then loadedTemplate; else loadingTemplate'></div>
+<ng-template #loadedTemplate>
+	<app-content-header title="{{this.element.name}}">
+		<button mat-icon-button aria-label="Edit name" *ngIf="this.authService.isInEditing()"
+			(click)="this.editName($event)">
+			<mat-icon>edit</mat-icon>
+		</button>
+	</app-content-header>
+	<mat-tab-group mat-align-tabs="center">
+		<mat-tab *ngIf="this.displayDescription()">
+			<ng-template mat-tab-label>
+				<mat-icon class="tab-icon">account_circle</mat-icon>
+				Description
+			</ng-template>
+			<div class="description" [froalaView]="this.element.description"></div>
+		</mat-tab>
+		<mat-tab *ngIf="this.displayChecklist()">
+			<ng-template mat-tab-label>
+				<mat-icon class="tab-icon">article</mat-icon>
+				Checklist
+			</ng-template>
+			<div class="checklist" *ngIf="this.element.checklist.length != 0 || this.authService.isInEditing()">
+				<mat-stepper orientation="vertical" linear="true">
+					<mat-step *ngFor="let checklist of this.element.checklist; let i = index">
+						<ng-template matStepLabel>Step {{i + 1}}</ng-template>
+						<p>{{checklist}}</p>
+						<button mat-button matStepperPrevious *ngIf="i != 0">Back</button>
+						<button mat-button matStepperNext *ngIf="i != this.element.checklist.length - 1">Next</button>
+						<button mat-button *ngIf="i == this.element.checklist.length - 1">Finish</button>
+						<button mat-button *ngIf="this.authService.isInEditing()">Delete</button>
+					</mat-step>
+					<mat-step *ngIf="this.authService.isInEditing()">
+						<ng-template matStepLabel>Add new element</ng-template>
+						<mat-form-field>
+							<mat-label>Textarea</mat-label>
+							<textarea matInput></textarea>
+						</mat-form-field>
+						<br>
+						<button mat-button>Add</button>
+					</mat-step>
+				</mat-stepper>
+			</div>
+		</mat-tab>
+		<mat-tab *ngIf="this.displayVideo()">
+			<ng-template mat-tab-label>
+				<mat-icon class="tab-icon">movie</mat-icon>
+				Video
+			</ng-template>
+			<iframe width="100%" height="100%" style="display: flex;" [src]="video" frameborder="0"
+				allowfullscreen></iframe>
+		</mat-tab>
+	</mat-tab-group>
+	<app-popup-menu></app-popup-menu>
+</ng-template>
+
+<ng-template #loadingTemplate>
+	<app-loading></app-loading>
+</ng-template>

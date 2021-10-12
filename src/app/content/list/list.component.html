@@ -1,0 +1,10 @@
+<div *ngIf='this.imageContent; then loadedTemplate; else loadingTemplate'></div>
+<ng-template #loadedTemplate>
+	<app-content-header title="Items"></app-content-header>
+	<app-image-view [content]="this.imageContent"></app-image-view>
+    <app-popup-menu></app-popup-menu>
+</ng-template>
+
+<ng-template #loadingTemplate>
+    <app-loading></app-loading>
+</ng-template>

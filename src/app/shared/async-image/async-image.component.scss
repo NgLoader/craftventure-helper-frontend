@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+.image {
+  overflow: hidden;
+}
+
+.image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: all 0.3s;
+  transform: scale(1);
+}
+
+.image :hover {
+  transform: scale(1.1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

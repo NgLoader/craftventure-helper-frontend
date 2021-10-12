@@ -1,0 +1,58 @@
+.header {
+  margin-bottom: 10px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  position: sticky;
+  height: 56px;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+}
+
+mat-toolbar button {
+  margin: 5px;
+}
+
+mat-toolbar-row span,
+mat-icon {
+  outline: none;
+  cursor: pointer;
+  color: white;
+}
+
+.title {
+  padding: 12px;
+  color: white;
+  cursor: pointer;
+}
+
+.menu {
+	display: flex;
+	flex-direction: row;
+}
+
+.rotateIcon mat-icon:hover {
+  transform: rotate(180deg);
+  transition: 0.5s;
+}
+
+.rotateIcon mat-icon {
+  transition: 0.5s;
+}
+
+@media screen and (max-width: 720px) {
+  mat-toolbar {
+    height: 112px;
+	flex-direction: column;
+  }
+  .spacer {
+	  display: none;
+  }
+}

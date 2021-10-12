@@ -1,0 +1,4 @@
+<div #contextMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="contextMenu"></div>
+<mat-menu #contextMenu>
+	<button mat-menu-item *ngFor="let field of fields" (click)="field.leftClick && field.leftClick($event, field)">{{field.name}}</button>
+</mat-menu>

@@ -1,0 +1,34 @@
+<h2 mat-dialog-title class="header">Create Item</h2>
+<mat-dialog-content class="content">
+	<div>
+		<mat-form-field>
+			<mat-label>Name</mat-label>
+			<input matInput [(ngModel)]="this.name">
+		</mat-form-field>
+	</div>
+	<div>
+		<mat-form-field>
+			<mat-label>Image</mat-label>
+			<input matInput [(ngModel)]="this.image">
+		</mat-form-field>
+	</div>
+	<div>
+		<mat-form-field>
+			<mat-label>Keywords</mat-label>
+			<mat-chip-list #chipList aria-label="Keywords">
+				<mat-chip *ngFor="let keyword of this.keywords" (removed)="removeKeywords(keyword)">
+					{{keyword}}
+					<mat-icon matChipRemove>cancel</mat-icon>
+				</mat-chip>
+				<input [matChipInputFor]="chipList" (matChipInputTokenEnd)="addKeywords($event)">
+			</mat-chip-list>
+		</mat-form-field>
+	</div>
+	<div>
+		<mat-checkbox [(ngModel)]="this.enabled">Enabled</mat-checkbox>
+	</div>
+</mat-dialog-content>
+<mat-dialog-actions class="dialogFooter">
+	<button mat-button mat-dialog-close>Close</button>
+	<button mat-button (click)="this.submit()">{{this.content ? 'Update' : 'Create'}}</button>
+</mat-dialog-actions>

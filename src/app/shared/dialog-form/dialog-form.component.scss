@@ -1,0 +1,41 @@
+h1 {
+  text-align: center;
+}
+
+:host {
+  width: 40%;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.buttons {
+  display: flex;
+}
+
+.buttons button {
+  flex: 1;
+}
+
+.chip-box.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.chip-item .cdk-drop-list-dragging {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.content-item {
+  margin: 10px;
+}
+
+.content-item * {
+  width: 100%;
+}
+
+.content-item mat-chip {
+    width: auto;
+}

@@ -1,0 +1,90 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<div mat-dialog-content class="content">
+	<div *ngFor="let field of fields"
+		[ngSwitch]="field.model"
+		(click)="field.leftClick && field.leftClick($event, field)"
+		[style]="field.style"
+		class="content-item">
+		<div *ngSwitchCase="'button'">
+			<mat-label *ngIf="field.name">{{field.name}}</mat-label>
+			<button mat-stroked-button color="primary">
+				{{field.placeholder || field.name}}
+			</button>
+		</div>
+
+		<div *ngSwitchCase="'checkbox'">
+			<mat-label *ngIf="field.name">{{field.name}}</mat-label>
+			<mat-checkbox [checked]="field.value && field.value == true" (change)="toggleValue(field, $event)">
+				{{field.placeholder || field.name}}
+			</mat-checkbox>
+		</div>
+
+		<div *ngSwitchCase="'editor'">
+			<textarea
+				[placeholder]="field.placeholder || ''"
+				[froalaEditor]="this.froalaOptions"
+				[(froalaModel)]="field.value"
+				[id]="'dialog-' + field.id"></textarea>
+		</div>
+
+		<mat-form-field *ngSwitchCase="'select'">
+			<mat-label *ngIf="field.name">{{field.name}}</mat-label>
+			<mat-select (selectionChange)="selectValue(field, $event)">
+				<mat-option *ngFor="let value of field.value" [value]="value" [attr.selected]="field.placeholder == value">
+					{{value}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field *ngSwitchCase="'chip'">
+			<mat-label *ngIf="field.name">{{field.name}}</mat-label>
+			<mat-chip-list #chipList
+				cdkDropList
+				cdkDropListOrientation="horizontal"
+				(cdkDropListDropped)="dropChip(field, $event)"
+				class="chip-box">
+				<mat-chip *ngFor="let value of field.value"
+					cdkDrag
+					[selectable]="true"
+					[removable]="true"
+					(removed)="removeChip(field, value)"
+					class="chip-item">
+					{{value}}
+					<mat-icon matChipRemove>cancel</mat-icon>
+				</mat-chip>
+				<input matInput
+					[disabled]="field.inputType == 'disabled'"
+					[placeholder]="field.placeholder"
+					[matChipInputFor]="chipList"
+					[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+					(matChipInputTokenEnd)="addChip(field, $event)">
+			</mat-chip-list>
+		</mat-form-field>
+
+		<mat-form-field *ngSwitchCase="'textarea'">
+			<mat-label *ngIf="field.name">{{field.name}}</mat-label>
+			<textarea matInput
+				[placeholder]="field.placeholder || ''"
+				[type]="field.inputType || 'text'"
+				[value]="field.value || ''"
+				[id]="'dialog-' + field.id"
+				[disabled]="field.inputType == 'disabled'">
+			</textarea>
+		</mat-form-field>
+
+		<mat-form-field *ngSwitchDefault>
+			<mat-label *ngIf="field.name">{{field.name}}</mat-label>
+			<input matInput
+			[placeholder]="field.placeholder || ''"
+			[type]="field.inputType || 'text'"
+			[value]="field.value || ''"
+			[id]="'dialog-' + field.id"
+			[disabled]="field.inputType == 'disabled'">
+		</mat-form-field>
+	</div>
+</div>
+<h2 mat-dialog-title *ngIf="error">{{error}}</h2>
+<div mat-dialog-actions class="buttons">
+	<button mat-button *ngIf="this.submit" (click)="this.submit()">{{this.submitName}}</button>
+	<button mat-button mat-dialog-close class="close">Close</button>
+</div>

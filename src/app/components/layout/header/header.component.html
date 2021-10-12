@@ -1,0 +1,92 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row class="toolbar-big">
+        <mat-icon *ngIf="this.lastRoute" [routerLink]="this.lastRoute">keyboard_backspace</mat-icon>
+        <span routerLink="/">{{this.title}}</span>
+        <div class="spacer"></div>
+        <ng-container *ngTemplateOutlet="menus;context:{small:false, top:false}"></ng-container>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="toolbar-small">
+        <span class="title" routerLink="/">{{this.title}}</span>
+        <ng-container *ngTemplateOutlet="menus;context:{small:true, top:true}"></ng-container>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="toolbar-small">
+        <ng-container *ngTemplateOutlet="menus;context:{small:true, top:false}" style="order: 1; text-align: right;"></ng-container>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<ng-template #menus let-small="small", let-top="top">
+    <div *ngFor="let menu of this.menuService.menus">
+        <div *ngIf="menu && !(menu.hidden && menu.hidden()) && (!small || ((!top && !menu.topWhenSmall) || (top && menu.topWhenSmall)))">
+            <div *ngIf="menu.routerLink != undefined">
+                <button mat-raised-button
+                    *ngIf="menu.icon == undefined"
+                    [disabled]="menu.disabled && menu.disabled()"
+                    [style]="menu.style"
+                    [matTooltip]="menu.tooltip"
+                    [matTooltipPosition]="menu.tooltipPosition"
+                    [routerLink]="menu.routerLink"
+                    [class]="menu.class"
+                    color="second">
+                    <div>{{menu.name}}</div>
+                </button>
+                <button mat-icon-button
+                    *ngIf="menu.icon != undefined"
+                    [disabled]="menu.disabled && menu.disabled()"
+                    [style]="menu.style"
+                    [matTooltip]="menu.tooltip"
+                    [matTooltipPosition]="menu.tooltipPosition"
+                    [routerLink]="menu.routerLink"
+                    [class]="menu.class"
+                    color="second">
+                    <mat-icon>{{menu.icon}}</mat-icon>
+                    <span *ngIf="menu.name != undefined">{{menu.name}}</span>
+                </button>
+            </div>
+            <div *ngIf="menu.routerLink == undefined">
+                <button mat-raised-button
+                    *ngIf="menu.icon == undefined"
+                    [disabled]="menu.disabled && menu.disabled()"
+                    [style]="menu.style"
+                    [matTooltip]="menu.tooltip"
+                    [matTooltipPosition]="menu.tooltipPosition"
+                    [matMenuTriggerFor]="menuEvent"
+                    [class]="menu.class"
+                    color="second">
+                    <div>{{menu.name}}</div>
+                </button>
+                <button mat-icon-button
+                    *ngIf="menu.icon != undefined"
+                    [disabled]="menu.disabled && menu.disabled()"
+                    [style]="menu.style"
+                    [matTooltip]="menu.tooltip"
+                    [matTooltipPosition]="menu.tooltipPosition"
+                    [matMenuTriggerFor]="menuEvent"
+                    [class]="menu.class"
+                    color="second">
+                    <mat-icon>{{menu.icon}}</mat-icon>
+                    <span *ngIf="menu.name != undefined">{{menu.name}}</span>
+                </button>
+                <mat-menu #menuEvent="matMenu">
+                    <div *ngFor='let element of menu.elements'>
+                        <button
+                            mat-menu-item
+                            *ngIf="element && !(element.hidden && element.hidden())"
+                            [disabled]="element.disabled && element.disabled()"
+                            [style]="element.style"
+                            [matTooltip]="element.tooltip"
+                            [matTooltipPosition]="element.tooltipPosition"
+                            [routerLink]="element.routerLink != undefined ? [element.routerLink] : []"
+                            [class]="menu.class"
+                            (click)='element.click != undefined && element.click()'>
+                            <mat-icon *ngIf="element.icon != undefined">
+                                <mat-icon>{{element.icon}}</mat-icon>
+                                <span *ngIf="element.name != undefined">{{element.name}}</span>
+                            </mat-icon>
+                            <div *ngIf="element.icon == undefined">{{element.name}}</div>
+                        </button>
+                    </div>
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+</ng-template>

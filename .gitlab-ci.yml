@@ -1,0 +1,18 @@
+image: node:14
+
+pages:
+  cache:
+    paths:
+      - node_modules/
+
+  stage: deploy
+  script:
+    - npm install -g @angular/cli@10.0.8
+    - npm install
+    - npm run buildProd
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+    - pages
