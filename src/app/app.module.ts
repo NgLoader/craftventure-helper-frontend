@@ -7,8 +7,8 @@ import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpRequestInterceptor } from './service/httprequest.interceptor';
 import { ShellModule } from './shell/shell.module';
-import { MarkdownModule } from 'ngx-markdown';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +18,7 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     BrowserAnimationsModule,
     AppRoutingModule,
     MatSelectModule,
+    MatChipsModule,
     ShellModule,
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot()

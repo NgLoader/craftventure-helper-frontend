@@ -4,7 +4,6 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { Item, ItemCategory, ItemService } from 'src/app/service/content/impl/content.service';
-import { DialogFormComponent, IFieldModel } from 'src/app/shared/dialog-form/dialog-form.component';
 import { ImageViewContent, ImageViewContentElement } from 'src/app/shared/image-view/image-view.component';
 import { PopupMenuComponent } from 'src/app/shared/popup-menu/popup-menu.component';
 import { CreateCategoryDialogComponent } from './create-category-dialog/create-category-dialog.component';
@@ -39,8 +38,10 @@ export class ListComponent implements OnInit {
   }
 
   loadPageContent(url: string) {
-    url = url.slice(6, url.length);
-    const path = url.length > 0 ? url.split('/') : [];
+    const args = url.split('/');
+    args.shift();
+    args.shift();
+    const path = url.length > 0 ? args : [];
     if (path.length > 0) {
       this.itemService.getIdForPath(path).subscribe(id => {
         if (id) {
@@ -138,32 +139,10 @@ export class ListComponent implements OnInit {
       return false;
     }
 
-    const dialog = this.dialog.open(DialogFormComponent);
-    dialog.componentInstance.title = "Create Item";
-    dialog.componentInstance.fields = [
-      {
-        name: "Name",
-        id: "name",
-        model: IFieldModel.INPUT
-      },
-      {
-        name: "Image",
-        id: "image",
-        model: IFieldModel.INPUT
-      },
-      {
-        name: "Keyworlds",
-        id: "keyworlds",
-        model: IFieldModel.CHIP
-      }
-    ];
-    dialog.componentInstance.submitName = content ? "Update" : "Create";
-    /*
     const dialog = this.dialog.open(CreateItemDialogComponent);
     dialog.componentInstance.itemService = this.itemService;
     dialog.componentInstance.content = update ? content : undefined;
     dialog.componentInstance.categoryId = this.currentCategoryId;
-    */
     return true;
   }
 

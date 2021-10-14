@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { Item, ItemService } from 'src/app/service/content/impl/content.service';
-import { MenuService } from 'src/app/service/menu/menu.service';
 import { DialogFormComponent, IFieldModel } from 'src/app/shared/dialog-form/dialog-form.component';
 import { PopupMenuComponent } from 'src/app/shared/popup-menu/popup-menu.component';
 
@@ -33,9 +31,11 @@ export class ViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      let url = this.router.url;
-      url = url.slice(6, url.length);
-      this.loadPageContent(url.length > 0 ? url.split('/') : []);
+      const url = this.router.url;
+      const args = url.split('/');
+      args.shift();
+      args.shift();
+      this.loadPageContent(url.length > 0 ? args : []);
     });
   }
 
