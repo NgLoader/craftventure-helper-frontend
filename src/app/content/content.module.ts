@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListComponent } from './list/list.component';
 import { ViewComponent } from './view/view.component';
-import { LoadingModule } from '../components/layout/loading/loading.module';
 import { DialogFormModule } from '../shared/dialog-form/dialog-form.module';
 import { ImageViewModule } from '../shared/image-view/image-view.module';
 import { PopupMenuModule } from '../shared/popup-menu/popup-menu.module';
@@ -22,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { AsyncImageModule } from '../shared/async-image/async-image.module';
 import { FroalaViewModule } from 'angular-froala-wysiwyg';
 import { ContentRoutingModule } from './content-routing.module';
+import { LoadingModule } from '../shared/loading/loading.module';
 
 @NgModule({
   declarations: [ListComponent, ViewComponent, CreateItemDialogComponent, CreateCategoryDialogComponent],

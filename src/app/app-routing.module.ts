@@ -16,14 +16,18 @@ const routes: Routes = [
                 loadChildren: () => import('./content/content-routing.module').then(child => child.ContentRoutingModule)
             },
             {
+                path: 'admin',
+                loadChildren: () => import('./admin/admin-routing.module').then(child => child.AdminRoutingModule)
+            },
+            {
                 path: 'login',
-                loadChildren: () => import('./components/login/login-routing.module').then(child => child.LoginRoutingModule)
+                loadChildren: () => import('./login/login.module').then(child => child.LoginModule)
             },
         ]
     },
     {
         path: '**',
-        loadChildren: () => import('./components/page-not-found/page-not-found.module').then(child => child.PageNotFoundModule)
+        loadChildren: () => import('./page-not-found/page-not-found.module').then(child => child.PageNotFoundModule)
     }
 ];
 

@@ -65,11 +65,6 @@ export class ViewComponent implements OnInit {
     return description != undefined && description.trim().length > 0;
   }
 
-  displayChecklist() {
-    const checklist = this.element.checklist;
-    return this.authService.isInEditing() || checklist != undefined && checklist.length > 0;
-  }
-
   displayVideo() {
     const video = this.element.video;
     return video != undefined && video.trim().length > 0;

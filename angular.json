@@ -5,7 +5,14 @@
 	"projects": {
 		"craftventure": {
 			"projectType": "application",
-			"schematics": {},
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				},
+				"@schematics/angular:application": {
+					"strict": true
+				}
+			},
 			"root": "",
 			"sourceRoot": "src",
 			"prefix": "app",
@@ -35,7 +42,9 @@
 						"sourceMap": true,
 						"optimization": false,
 						"namedChunks": true,
-						"allowedCommonJsDependencies": ["crypto-js"]
+						"allowedCommonJsDependencies": [
+							"crypto-js"
+						]
 					},
 					"configurations": {
 						"production": {

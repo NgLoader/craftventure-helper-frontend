@@ -1,0 +1,12 @@
+<mat-drawer-container class="container">
+    <mat-drawer mode="side" opened>
+        <div class="sidenav">
+            <button mat-button color="primary" routerLink="/admin">Overview</button>
+            <button mat-button color="primary" routerLink="users">Users</button>
+            <button mat-button color="primary" routerLink="audit-log">Audit-log</button>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

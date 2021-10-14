@@ -26,9 +26,9 @@ export class HeaderComponent {
     public themeService: ThemeService,
     private snackbar: MatSnackBar,
     public dialog: MatDialog) {
-    this.menuService.setMenu(MenuIndexs.ITEMS, { name: 'Items', routerLink: "/item" });
-    this.menuService.setMenu(MenuIndexs.EVENTS, { name: 'Events', routerLink: "/event" });
-    this.menuService.setMenu(MenuIndexs.ARCHIVEMENTS, { name: 'Archivements', routerLink: "/archivement" });
+//    this.menuService.setMenu(MenuIndexs.ITEMS, { name: 'Items', routerLink: "/item" });
+//    this.menuService.setMenu(MenuIndexs.EVENTS, { name: 'Events', routerLink: "/event" });
+//    this.menuService.setMenu(MenuIndexs.ARCHIVEMENTS, { name: 'Archivements', routerLink: "/archivement" });
 
     this.menuService.setMenu(MenuIndexs.SETTINGS, {
       name: undefined,

@@ -4,9 +4,6 @@ import { LoginComponent } from './login.component';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { LoadingModule } from '../layout/loading/loading.module';
-
-
 
 @NgModule({
   declarations: [LoginComponent],
@@ -14,14 +11,10 @@ import { LoadingModule } from '../layout/loading/loading.module';
     CommonModule,
     MatInputModule,
     MatButtonModule,
-    LoadingModule,
-
-    RouterModule.forChild([
-      {
-        path: '',
-        component: LoginComponent
-      }
-    ])
+    RouterModule.forChild([{
+      path: '',
+      component: LoginComponent
+    }])
   ]
 })
 export class LoginModule { }
