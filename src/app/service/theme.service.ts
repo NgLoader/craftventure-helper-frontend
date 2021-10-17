@@ -35,7 +35,7 @@ export class ThemeService {
   readonly defaultTheme = themes[3];
   private theme: Theme = this.defaultTheme
 
-  private background: boolean = true;
+  private background: boolean = false;
 
   constructor() { }
 

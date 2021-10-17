@@ -22,7 +22,7 @@
 		<div *ngSwitchCase="'editor'">
 			<textarea
 				[placeholder]="field.placeholder || ''"
-				[froalaEditor]="this.froalaOptions"
+				[froalaEditor]="froalaOptions"
 				[(froalaModel)]="field.value"
 				[id]="'dialog-' + field.id"></textarea>
 		</div>

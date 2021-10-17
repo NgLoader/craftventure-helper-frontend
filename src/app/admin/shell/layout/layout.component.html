@@ -1,12 +1,11 @@
-<mat-drawer-container class="container">
+<mat-drawer-container class="admin-container" autosize>
     <mat-drawer mode="side" opened>
-        <div class="sidenav">
-            <button mat-button color="primary" routerLink="/admin">Overview</button>
-            <button mat-button color="primary" routerLink="users">Users</button>
-            <button mat-button color="primary" routerLink="audit-log">Audit-log</button>
+        <div class="admin-sidenav">
+            <p>Admin Control Panel</p>
+            <button mat-raised-button routerLink="/admin">Overview</button>
+            <button mat-raised-button routerLink="users">Users</button>
+            <button mat-raised-button routerLink="audit-log">Audit-log</button>
         </div>
     </mat-drawer>
-    <mat-drawer-content>
-        <router-outlet></router-outlet>
-    </mat-drawer-content>
+    <router-outlet></router-outlet>
 </mat-drawer-container>

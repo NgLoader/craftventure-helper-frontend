@@ -1,9 +1,11 @@
+import { M } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { Item, ItemCategory, ItemService } from 'src/app/service/content/impl/content.service';
+import { DialogFormComponent } from 'src/app/shared/dialog-form/dialog-form.component';
 import { ImageViewContent, ImageViewContentElement } from 'src/app/shared/image-view/image-view.component';
 import { PopupMenuComponent } from 'src/app/shared/popup-menu/popup-menu.component';
 import { CreateCategoryDialogComponent } from './create-category-dialog/create-category-dialog.component';
@@ -16,6 +18,7 @@ import { CreateItemDialogComponent } from './create-item-dialog/create-item-dial
 })
 export class ListComponent implements OnInit {
 
+  title: string;
   imageContent: ImageViewContent[];
 
   private currentCategoryId: string = undefined;
@@ -46,6 +49,7 @@ export class ListComponent implements OnInit {
       this.itemService.getIdForPath(path).subscribe(id => {
         if (id) {
           this.currentCategoryId = id.id;
+          this.title = decodeURIComponent(args[args.length - 1]);
 
           this.itemService.getContent(id.id).subscribe(result => {
             if (result) {
@@ -58,6 +62,7 @@ export class ListComponent implements OnInit {
       this.itemService.getContent(undefined).subscribe(result => {
         if (result) {
           this.currentCategoryId = undefined;
+          this.title = "Main"
 
           this.loadContent(result.categorys, result.elements);
         }
@@ -164,11 +169,17 @@ export class ListComponent implements OnInit {
     {
       name: 'Delete',
       leftClick: (() => {
-        if (content.class == "item") {
-          this.itemService.deleteElement(content.id).subscribe();
-        } else {
-          this.itemService.deleteCategory(content.id).subscribe();
-        }
+        const dialog = this.dialog.open(DialogFormComponent);
+        dialog.componentInstance.title = "Delete " + content.name;
+        dialog.componentInstance.submitName = "Delete";
+        dialog.componentInstance.submit = (() => {
+          if (content.class == "item") {
+            this.itemService.deleteElement(content.id).subscribe();
+          } else {
+            this.itemService.deleteCategory(content.id).subscribe();
+          }
+          dialog.close();
+        }).bind(this)
       }).bind(this)
     }];
     this.popupMenu.openMenu(event);

@@ -35,7 +35,7 @@
 							"./node_modules/froala-editor/css/froala_editor.pkgd.min.css",
 							"./node_modules/froala-editor/css/froala_style.min.css"
 						],
-						"scripts": [],
+						"scripts": [ ],
 						"vendorChunk": true,
 						"extractLicenses": false,
 						"buildOptimizer": false,
@@ -78,7 +78,8 @@
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"options": {
-						"browserTarget": "craftventure:build"
+						"browserTarget": "craftventure:build",
+						"disableHostCheck": true
 					},
 					"configurations": {
 						"production": {

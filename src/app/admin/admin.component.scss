@@ -1,0 +1,17 @@
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: unset;
+}
+
+.admin-dashboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-card {
+    max-width: 400px;
+    margin: 10px;
+    align-items: center;
+}

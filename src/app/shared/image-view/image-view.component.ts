@@ -58,6 +58,11 @@ export class ImageViewComponent implements OnInit, OnChanges, OnDestroy {
     document.removeEventListener('contextmenu', this.rightClickListener);
   }
 
+  public canDisplayCard(element: ImageViewContent) {
+    const content = element.flipped ? element.back : element.front;
+    return content && (content.canView == undefined || content.canView());
+  }
+
   private addElementRef(parent: ImageViewContent, element: ImageViewContentElement) {
     element.parent = parent;
 

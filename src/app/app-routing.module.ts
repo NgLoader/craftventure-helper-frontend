@@ -1,6 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { LayoutComponent } from './shell/layout/layout.component';
+import { AuthGuard } from './service/auth/auth.guard';
 
 const routes: Routes = [
     {
@@ -9,7 +10,9 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./dashboard/dashboard.module').then(child => child.DashboardModule)
+                redirectTo: 'c',
+                pathMatch: 'full'
+                //loadChildren: () => import('./dashboard/dashboard.module').then(child => child.DashboardModule)
             },
             {
                 path: 'c',
@@ -17,6 +20,7 @@ const routes: Routes = [
             },
             {
                 path: 'admin',
+                //canActivate: [AuthGuard],
                 loadChildren: () => import('./admin/admin-routing.module').then(child => child.AdminRoutingModule)
             },
             {
@@ -27,6 +31,7 @@ const routes: Routes = [
     },
     {
         path: '**',
+        component: LayoutComponent,
         loadChildren: () => import('./page-not-found/page-not-found.module').then(child => child.PageNotFoundModule)
     }
 ];

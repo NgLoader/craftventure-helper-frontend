@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Update user</h1>
+<form class="form">
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput [formControl]="usernameFormControl" placeholder="NilssMiner99" [(ngModel)]="username">
+        <mat-error *ngIf="usernameFormControl.hasError('pattern') && !usernameFormControl.hasError('required')">
+            Please enter a valid username
+        </mat-error>
+        <mat-error *ngIf="usernameFormControl.hasError('required')">
+            Username is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+</form>
+<form class="form">
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. cv@example.com" [(ngModel)]="email">
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+</form>
+<form class="form">
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Role</mat-label>
+        <mat-select [(value)]="role">
+            <mat-option value="ADMIN">ADMIN</mat-option>
+            <mat-option value="EDITOR">EDITOR</mat-option>
+            <mat-option value="USER">USER</mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>
+<div class="button">
+    <button mat-button (click)="updateUser()">Update</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+</div>

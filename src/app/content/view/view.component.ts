@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/service/auth/auth.service';
 import { Item, ItemService } from 'src/app/service/content/impl/content.service';
 import { DialogFormComponent, IFieldModel } from 'src/app/shared/dialog-form/dialog-form.component';
 import { PopupMenuComponent } from 'src/app/shared/popup-menu/popup-menu.component';
+import { UpdateDescriptionDialogComponent } from './update-description-dialog/update-description-dialog.component';
 
 @Component({
   selector: 'app-view',
@@ -93,6 +94,13 @@ export class ViewComponent implements OnInit {
     },{
       name: 'Description',
       leftClick: (() => {
+        /*
+        import('./update-description-dialog/update-description-dialog.module')
+          .then(importedModule => importedModule.UpdateDescriptionDialogModule)
+          .then(moduleType => this.dialog.open(moduleType.component))
+          .then(ref => {
+          });
+          */
         const dialog = this.dialog.open(DialogFormComponent);
         dialog.componentInstance.title = "Edit description";
         dialog.componentInstance.fields = [{

@@ -1,0 +1,93 @@
+<h1 mat-dialog-title>Create user</h1>
+<form class="form">
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput [formControl]="usernameFormControl" placeholder="NilssMiner99"
+            [(ngModel)]="username">
+        <mat-error *ngIf="usernameFormControl.hasError('pattern') && !usernameFormControl.hasError('required')">
+            Please enter a valid username
+        </mat-error>
+        <mat-error *ngIf="usernameFormControl.hasError('required')">
+            Username is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+</form>
+<form class="form">
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. cv@example.com"
+            [(ngModel)]="email">
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+</form>
+<form class="form">
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Role</mat-label>
+        <mat-select [(value)]="role">
+            <mat-option value="ADMIN">ADMIN</mat-option>
+            <mat-option value="EDITOR">EDITOR</mat-option>
+            <mat-option value="USER">USER</mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>
+<table class="full-width" cellspacing="0">
+    <tr>
+        <td>
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Password</mat-label>
+                <input type="password" matInput [formControl]="passwordFormControl" #password maxlength="32"
+                    placeholder="Password" [(ngModel)]="passwordValue">
+                <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required')">
+                    Please enter a valid password
+                </mat-error>
+                <mat-error
+                    *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+                    Please enter a longer password
+                </mat-error>
+                <mat-error
+                    *ngIf="passwordFormControl.hasError('maxlength') && !passwordFormControl.hasError('required')">
+                    Please enter a shorter password
+                </mat-error>
+                <mat-error *ngIf="passwordFormControl.hasError('required')">
+                    Password is <strong>required</strong>
+                </mat-error>
+                <mat-hint align="end">{{password.value.length}} / 32</mat-hint>
+            </mat-form-field>
+        </td>
+        <td>
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Password again</mat-label>
+                <input type="password" matInput [formControl]="passwordAgainFormControl" #passwordAgain maxlength="32"
+                    placeholder="Password" [(ngModel)]="confirmPasswordValue">
+                <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required')">
+                    Please enter a valid password
+                </mat-error>
+                <mat-error
+                    *ngIf="passwordAgainFormControl.hasError('equals') && !passwordAgainFormControl.hasError('required')">
+                    Please enter the correct password
+                </mat-error>
+                <mat-error
+                    *ngIf="passwordAgainFormControl.hasError('minlength') && !passwordAgainFormControl.hasError('required')">
+                    Please enter a longer password
+                </mat-error>
+                <mat-error
+                    *ngIf="passwordAgainFormControl.hasError('maxlength') && !passwordAgainFormControl.hasError('required')">
+                    Please enter a shorter password
+                </mat-error>
+                <mat-error *ngIf="passwordAgainFormControl.hasError('required')">
+                    Password is not <strong>correct</strong>
+                </mat-error>
+                <mat-hint align="end">{{passwordAgain.value.length}} / 32</mat-hint>
+            </mat-form-field>
+        </td>
+    </tr>
+</table>
+<div class="button">
+    <button mat-button (click)="createUser()">Create</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+</div>

@@ -10,11 +10,11 @@ export function isView(url: UrlSegment[]) {
 const routes: Routes = [
   {
     matcher: isView,
-    component: ViewComponent
+    loadChildren: () => import('./view/view.module').then(child => child.ViewModule)
   },
   {
     path: '**',
-    component: ListComponent
+    loadChildren: () => import('./list/list.module').then(child => child.ListModule)
   }
 ];
 

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AdminComponent } from './admin.component';
 import { RouterModule } from '@angular/router';
 import { ShellModule } from './shell/shell.module';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -11,6 +13,8 @@ import { ShellModule } from './shell/shell.module';
   imports: [
     CommonModule,
     ShellModule,
+    MatCardModule,
+    MatButtonModule,
     RouterModule.forChild([{
       path: '',
       component: AdminComponent
