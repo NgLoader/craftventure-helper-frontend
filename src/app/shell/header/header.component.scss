@@ -23,32 +23,82 @@ mat-icon {
   color: white;
 }
 
+.search {
+  display: block;
+  position: absolute;
+  width: 100%;
+  padding-right: 32px;
+  align-content: center;
+  text-align: center;
+  box-sizing: border-box;
+  z-index: 0;
+
+  .input {
+    width: 470px;
+    top: 8px;
+    font-size: 12px;
+  }
+
+  input {
+    font-size: 18px;
+    color: white;
+  }
+}
+
+::ng-deep .search .mat-form-field-infix {
+  padding: 0.5em 0;
+}
+
+::ng-deep .mat-form-field-outline.ng-tns-c40-0.ng-star-inserted{
+  background-color: #ad5700;
+  border-radius: 5px;
+}
+
 .title {
   padding: 12px;
   color: white;
   cursor: pointer;
+  z-index: 1;
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+mat-toolbar {
+  mat-form-field {
+      div.mat-form-field-flex {
+          align-items: flex-end;
+      }
+
+      div.mat-form-field-prefix {
+          padding-right: 12px !important;
+      }
+  }
 }
 
 .menu {
 	display: flex;
 	flex-direction: row;
-}
-
-.rotateIcon mat-icon:hover {
-  transform: rotate(180deg);
-  transition: 0.5s;
+  z-index: 1;
 }
 
 .rotateIcon mat-icon {
   transition: 0.5s;
+
+  :hover {
+    transform: rotate(180deg);
+    transition: 0.5s;
+  }
 }
 
 @media screen and (max-width: 720px) {
   mat-toolbar {
     height: 112px;
-	flex-direction: column;
+    flex-direction: column;
   }
+
   .spacer {
-	  display: none;
+    display: none;
   }
 }

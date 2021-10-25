@@ -9,6 +9,6 @@
 	<mat-checkbox [checked]="this.themeService.matBackground" (change)="this.onBackgroundChanged($event)">Background</mat-checkbox>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onCloseClick()">Abbruch</button>
-  <button mat-button (click)="onApplyClick()">Übernehmen</button>
+	<button mat-button (click)="onApplyClick()" color="accent">Übernehmen</button>
+	<button mat-button (click)="onCloseClick()">Abbruch</button>
 </div>

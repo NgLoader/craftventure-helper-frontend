@@ -1,9 +1,29 @@
 <mat-toolbar color="primary" class="header">
-    <div class="title" routerLink="/">{{this.title}}</div>
+    <div class="search" *ngIf="this.searchbarVisiblity">
+        <form [formGroup]="stateForm">
+            <mat-form-field class="input" appearance="outline">
+                <input
+                    matInput
+                    placeholder="Search..."
+                    [value]="this.searchbarValue"
+                    (change)="this.searchbarUpdate"
+                    formControlName="stateGroup"
+                    [matAutocomplete]="autoGroup">
+                    <mat-autocomplete #autoGroup="matAutocomplete">
+                        <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter">
+                            <mat-option *ngFor="let name of group.names" [value]="name">
+                                {{name}}
+                            </mat-option>
+                        </mat-optgroup>
+                    </mat-autocomplete>
+            </mat-form-field>
+        </form>
+    </div>
+    <div class="title" routerLink="/">Craftventure</div>
     <div class="spacer"></div>
     <div class="menu">
         <div *ngFor="let menu of this.menuService.menus">
-            <div *ngIf="menu && !(menu.hidden && menu.hidden())">
+            <div *ngIf="menu && !(menu.hidden && menu.hidden())" (click)="menu.click && menu.click()">
                 <div *ngIf="menu.routerLink != undefined">
                     <button mat-raised-button *ngIf="menu.icon == undefined" [routerLink]="menu.routerLink"
                         [matTooltip]="menu.tooltip" [class]="menu.class" color="second" matTooltipPosition="below">
@@ -16,11 +36,11 @@
                     </button>
                 </div>
                 <div *ngIf="menu.routerLink == undefined">
-                    <button mat-raised-button *ngIf="menu.icon == undefined" [matMenuTriggerFor]="menuEvent"
+                    <button mat-raised-button *ngIf="menu.icon == undefined" [matMenuTriggerFor]="menuEvent" [ngClass]="{ 'disabled' : menu.elements == 0 }"
                         [matTooltip]="menu.tooltip" [class]="menu.class" color="second" matTooltipPosition="below">
                         <div>{{menu.name}}</div>
                     </button>
-                    <button mat-icon-button *ngIf="menu.icon != undefined" [matMenuTriggerFor]="menuEvent"
+                    <button mat-icon-button *ngIf="menu.icon != undefined" [matMenuTriggerFor]="menuEvent" [ngClass]="{ 'disabled' : menu.elements == 0 }"
                         [matTooltip]="menu.tooltip" [class]="menu.class" color="second" matTooltipPosition="below">
                         <mat-icon>{{menu.icon}}</mat-icon>
                         <span *ngIf="menu.name != undefined">{{menu.name}}</span>

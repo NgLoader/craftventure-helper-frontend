@@ -1,3 +1,5 @@
 <div class="dashboard">
-	<app-image-view [content]=this.imageContent></app-image-view>
+	<app-loading *ngIf="!this.loaded"></app-loading>
+	<div #image class="background" style="getImageStyle()"></div>
+	<h1 class="header" routerLink="c">play.Craftventure.net</h1>
 </div>

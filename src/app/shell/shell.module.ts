@@ -12,16 +12,18 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DialogThemeSelectComponent } from './header/dialog-theme-select/dialog-theme-select.component';
+import { SearchDialogComponent } from './header/search-dialog/search-dialog.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
-  declarations: [ LayoutComponent, HeaderComponent, FooterComponent, DialogThemeSelectComponent ],
+  declarations: [ LayoutComponent, HeaderComponent, FooterComponent, DialogThemeSelectComponent, SearchDialogComponent ],
   imports: [
     CommonModule,
     MatMenuModule,
@@ -37,7 +39,9 @@ import { DialogThemeSelectComponent } from './header/dialog-theme-select/dialog-
     MatSnackBarModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatAutocompleteModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule
   ],
   exports: [ LayoutComponent ]

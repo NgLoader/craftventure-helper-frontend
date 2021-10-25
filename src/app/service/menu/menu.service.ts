@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 
 export enum MenuIndexs {
-  ITEMS,
-  EVENTS,
-  ARCHIVEMENTS,
   THEME,
   SETTINGS
 }
 
 export interface HeaderMenu extends MenuSetting {
   elements?: HeaderMenuElement[];
+  click?(): void;
 }
 
 export interface HeaderMenuElement extends MenuSetting {

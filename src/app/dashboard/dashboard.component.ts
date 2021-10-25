@@ -1,44 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { ImageViewContent } from '../shared/image-view/image-view.component';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements AfterViewInit {
 
+  public loaded: boolean = false;
 
-  imageContent: ImageViewContent[] = [
-    {
-      front: {
-        id: "item",
-        name: "Items",
-        image: "https://cv.wuffy.eu/new/images/items.png",
-        routerLink: "/item"
-      }
-    },
-    {
-      front: {
-        id: "event",
-        name: "Events",
-        image: "https://cv.wuffy.eu/new/images/event.png",
-        routerLink: "/event",
-      }
-    },
-    {
-      front: {
-        id: "archivement",
-        name: "Archivements",
-        image: "https://cv.wuffy.eu/new/images/archivements.png",
-        routerLink: "/archivement"
-      }
-    }
-  ];
+  @ViewChild('image') image: ElementRef<HTMLDivElement>;
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngAfterViewInit() {
+    const image = new Image();
+    image.onload = () => {
+      const style = this.image.nativeElement.style;
+      style.backgroundImage = `url('${image.src}')`;
+      style.animation = "fadeIn 2s";
+      this.loaded = true;
+    }
+    image.src = "/assets/image/background.png";
   }
 
+  getImageStyle() {
+    return this.loaded ? { } : {
+      display: 'none'
+    }
+  }
 }

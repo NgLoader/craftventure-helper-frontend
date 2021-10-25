@@ -1,3 +1,4 @@
 <div class="image" mat-card-content [style]="this.getPlaceholderStyle()">
+	<app-loading *ngIf="!this.loaded"></app-loading>
 	<img #image [style]="this.getImageStyle()" alt="{{alt}}" />
 </div>

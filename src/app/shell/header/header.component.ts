@@ -1,46 +1,66 @@
-import { Location } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSelectChange } from '@angular/material/select';
+import { Component, EventEmitter, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog, } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { AuthService } from 'src/app/service/auth/auth.service';
-import { themes, ThemeService } from 'src/app/service/theme.service';
+import { ThemeService } from 'src/app/service/theme.service';
 import { MenuIndexs, MenuService } from '../../service/menu/menu.service';
 import { DialogThemeSelectComponent } from './dialog-theme-select/dialog-theme-select.component';
 
-export interface DialogThemeSelectData { }
+export interface StateGroup {
+  letter: string;
+  names: string[];
+}
+
+export const filter = (opt: string[], value: string): string[] => {
+  const filterValue = value.toLowerCase();
+
+  return opt.filter(item => item.toLowerCase().includes(filterValue));
+};
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
-  public title: string = "Craftventure";
+  public searchbarVisiblity: boolean = true;
+  public searchbarValue: string = "";
+  public searchbarUpdate: EventEmitter<string> = new EventEmitter();
+
+  public stateForm: FormGroup = this.formBuilder.group({
+    stateGroup: '',
+  });
+  public stateGroups: StateGroup[] = [{
+    letter: 'Categorys',
+    names: ['Items', 'Pascal', 'ist', 'dumm'],
+  }, {
+    letter: 'Items',
+    names: ['Geht', 'Das']
+  }];
+
+  public stateGroupOptions: Observable<StateGroup[]>;
 
   constructor(
+    private formBuilder: FormBuilder,
     public authService: AuthService,
     public menuService: MenuService,
     public themeService: ThemeService,
     private snackbar: MatSnackBar,
     public dialog: MatDialog) {
-//    this.menuService.setMenu(MenuIndexs.ITEMS, { name: 'Items', routerLink: "/item" });
-//    this.menuService.setMenu(MenuIndexs.EVENTS, { name: 'Events', routerLink: "/event" });
-//    this.menuService.setMenu(MenuIndexs.ARCHIVEMENTS, { name: 'Archivements', routerLink: "/archivement" });
-
+    this.menuService.setMenu(MenuIndexs.THEME, {
+      name: undefined, icon: "format_color_fill", click: (() => {
+        const dialogTheme = this.dialog.open(DialogThemeSelectComponent);
+        dialogTheme.componentInstance.themeService = this.themeService;
+      }).bind(this)
+    });
     this.menuService.setMenu(MenuIndexs.SETTINGS, {
       name: undefined,
       icon: 'settings',
       class: 'rotateIcon'
-    });
-    this.menuService.addElement(MenuIndexs.SETTINGS, {
-      name: 'Theme',
-      click: (() => {
-         const dialogTheme = this.dialog.open(DialogThemeSelectComponent);
-         dialogTheme.componentInstance.themeService = this.themeService;
-      }).bind(this)
     });
     this.menuService.addElement(MenuIndexs.SETTINGS, {
       name: 'Toggle Editor',
@@ -69,5 +89,25 @@ export class HeaderComponent {
       routerLink: '/login',
       hidden: () => { return this.authService.isLoggedIn() }
     });
+  }
+
+  ngOnInit() {
+    this.stateGroupOptions = this.stateForm.get('stateGroup')!.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this.filterGroup(value))
+      );
+  }
+
+  private filterGroup(value: string): StateGroup[] {
+    if (value) {
+      return this.stateGroups
+        .map(group => ({
+          letter: group.letter,
+          names: filter(group.names, value)
+        }))
+        .filter(group => group.names.length > 0);
+    }
+    return this.stateGroups;
   }
 }
