@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,19 +9,22 @@ export class DashboardComponent implements AfterViewInit {
 
   public loaded: boolean = false;
 
-  @ViewChild('image') image: ElementRef<HTMLDivElement>;
+  @ViewChild('video') video: ElementRef<HTMLVideoElement>;
+  @ViewChild('source') source: ElementRef<HTMLSourceElement>;
 
   constructor() { }
 
   ngAfterViewInit() {
-    const image = new Image();
-    image.onload = () => {
-      const style = this.image.nativeElement.style;
-      style.backgroundImage = `url('${image.src}')`;
-      style.animation = "fadeIn 2s";
+    this.video.nativeElement.onplay = () => {
       this.loaded = true;
+
+      const style = this.video.nativeElement.style;
+      style.visibility = 'visible';
+      style.animation = 'fadeIn 5s';
     }
-    image.src = "/assets/image/background.png";
+    this.video.nativeElement.volume = 0;
+    this.video.nativeElement.muted = true;
+    this.source.nativeElement.src = '/assets/image/background.webm';
   }
 
   getImageStyle() {

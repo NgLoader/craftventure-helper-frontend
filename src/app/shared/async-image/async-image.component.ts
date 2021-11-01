@@ -13,7 +13,7 @@ export class AsyncImageComponent implements AfterViewInit {
   @Input() width: number = 0;
   @Input() height: number = 0;
 
-  @ViewChild('image', { static: true }) image: ElementRef<HTMLImageElement>;
+  @ViewChild('image', { static: false }) image: ElementRef<HTMLImageElement | HTMLVideoElement>;
 
   loaded = false;
 
@@ -42,5 +42,9 @@ export class AsyncImageComponent implements AfterViewInit {
     return this.loaded ? this.getPlaceholderStyle() : {
       display: 'none'
     }
+  }
+
+  isImage() {
+    return !this.src.endsWith(".mp4");
   }
 }

@@ -1,21 +1,18 @@
 <mat-toolbar color="primary" class="header">
     <div class="search" *ngIf="this.searchbarVisiblity">
-        <form [formGroup]="stateForm">
+        <form>
             <mat-form-field class="input" appearance="outline">
-                <input
-                    matInput
-                    placeholder="Search..."
-                    [value]="this.searchbarValue"
-                    (change)="this.searchbarUpdate"
-                    formControlName="stateGroup"
-                    [matAutocomplete]="autoGroup">
-                    <mat-autocomplete #autoGroup="matAutocomplete">
-                        <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter">
-                            <mat-option *ngFor="let name of group.names" [value]="name">
-                                {{name}}
-                            </mat-option>
-                        </mat-optgroup>
-                    </mat-autocomplete>
+                <input type="text"
+                       placeholder="Pick one"
+                       aria-label="Number"
+                       matInput
+                       [formControl]="searchbarControl"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of searchbarFilteredOptions | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
             </mat-form-field>
         </form>
     </div>

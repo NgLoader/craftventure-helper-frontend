@@ -19,11 +19,10 @@ import { FooterComponent } from './footer/footer.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DialogThemeSelectComponent } from './header/dialog-theme-select/dialog-theme-select.component';
-import { SearchDialogComponent } from './header/search-dialog/search-dialog.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
-  declarations: [ LayoutComponent, HeaderComponent, FooterComponent, DialogThemeSelectComponent, SearchDialogComponent ],
+  declarations: [ LayoutComponent, HeaderComponent, FooterComponent, DialogThemeSelectComponent ],
   imports: [
     CommonModule,
     MatMenuModule,

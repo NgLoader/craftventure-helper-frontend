@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
@@ -8,17 +8,6 @@ import { AuthService } from 'src/app/service/auth/auth.service';
 import { ThemeService } from 'src/app/service/theme.service';
 import { MenuIndexs, MenuService } from '../../service/menu/menu.service';
 import { DialogThemeSelectComponent } from './dialog-theme-select/dialog-theme-select.component';
-
-export interface StateGroup {
-  letter: string;
-  names: string[];
-}
-
-export const filter = (opt: string[], value: string): string[] => {
-  const filterValue = value.toLowerCase();
-
-  return opt.filter(item => item.toLowerCase().includes(filterValue));
-};
 
 @Component({
   selector: 'app-header',
@@ -31,21 +20,11 @@ export class HeaderComponent implements OnInit {
   public searchbarValue: string = "";
   public searchbarUpdate: EventEmitter<string> = new EventEmitter();
 
-  public stateForm: FormGroup = this.formBuilder.group({
-    stateGroup: '',
-  });
-  public stateGroups: StateGroup[] = [{
-    letter: 'Categorys',
-    names: ['Items', 'Pascal', 'ist', 'dumm'],
-  }, {
-    letter: 'Items',
-    names: ['Geht', 'Das']
-  }];
-
-  public stateGroupOptions: Observable<StateGroup[]>;
+  public searchbarControl = new FormControl();
+  public searchbarOptions: string[] = ['category: ', 'name: ', 'place: '];
+  public searchbarFilteredOptions: Observable<string[]>;
 
   constructor(
-    private formBuilder: FormBuilder,
     public authService: AuthService,
     public menuService: MenuService,
     public themeService: ThemeService,
@@ -92,22 +71,15 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.stateGroupOptions = this.stateForm.get('stateGroup')!.valueChanges
+    this.searchbarFilteredOptions = this.searchbarControl.valueChanges
       .pipe(
         startWith(''),
-        map(value => this.filterGroup(value))
+        map(value => this.searchbarFilter(value))
       );
   }
 
-  private filterGroup(value: string): StateGroup[] {
-    if (value) {
-      return this.stateGroups
-        .map(group => ({
-          letter: group.letter,
-          names: filter(group.names, value)
-        }))
-        .filter(group => group.names.length > 0);
-    }
-    return this.stateGroups;
+  private searchbarFilter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.searchbarOptions.filter(option => option.toLowerCase().includes(filterValue));
   }
 }
