@@ -81,6 +81,7 @@ mat-toolbar {
 	display: flex;
 	flex-direction: row;
   z-index: 1;
+  align-items: center;
 }
 
 .rotateIcon mat-icon {

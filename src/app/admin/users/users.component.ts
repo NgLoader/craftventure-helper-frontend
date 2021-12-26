@@ -14,6 +14,22 @@ import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dial
 import { UpdateUserDialogComponent } from './update-user-dialog/update-user-dialog.component';
 import { UpdateUserPasswordDialogComponent } from './update-user-password-dialog/update-user-password-dialog.component';
 
+export interface ResponseData {
+  users: UserInfo[];
+  total_count: number;
+}
+
+export interface UserInfo {
+  id: string;
+  email: string;
+  role: string;
+  profile: {
+    name: string;
+  }
+  createdAt: Date,
+  updatedAt: Date
+}
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -116,20 +132,4 @@ export class UsersComponent implements AfterViewInit {
     ];
     this.popupMenu.openMenu(event);
   }
-}
-
-export interface ResponseData {
-  users: UserInfo[];
-  total_count: number;
-}
-
-export interface UserInfo {
-  id: string;
-  email: string;
-  role: string;
-  profile: {
-    name: string;
-  }
-  createdAt: Date,
-  updatedAt: Date
 }

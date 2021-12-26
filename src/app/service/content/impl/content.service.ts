@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ApiService } from "../../api/api.service";
-import { ContentService, ICategory, IElement, Response, SearchElementOptions } from "../content.service";
+import { ContentService, ICategory, IElement, Response, SearchElementOptions, SearchGlobalOptions } from "../content.service";
 
 export interface ItemCategory extends ICategory {
 	name: string,
@@ -28,6 +28,10 @@ export abstract class ItemService extends ContentService<ItemCategory, Item> {
 
 	_getIdForPath(path: string[]): Observable<Response> {
 		return this.httpClient.post<Response>(`${ApiService.DOMAIN}/${ItemService.ROUTE_ELEMENT}/path`, { path });
+	}
+
+	_getSearch(search: SearchGlobalOptions): Observable<Response> {
+		return this.httpClient.post<Response>(`${ApiService.DOMAIN}/${ItemService.ROUTE_ELEMENT}/search`, { search });
 	}
 
 	_getCategorys(options: SearchElementOptions): Observable<Response> {

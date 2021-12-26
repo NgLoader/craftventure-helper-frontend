@@ -62,7 +62,7 @@ export class ListComponent implements OnInit {
       this.itemService.getContent(undefined).subscribe(result => {
         if (result) {
           this.currentCategoryId = undefined;
-          this.title = "Main"
+          this.title = "Overview"
 
           this.loadContent(result.categorys, result.elements);
         }

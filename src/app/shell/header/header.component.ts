@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AuthService } from 'src/app/service/auth/auth.service';
+import { ItemService } from 'src/app/service/content/impl/content.service';
 import { ThemeService } from 'src/app/service/theme.service';
 import { MenuIndexs, MenuService } from '../../service/menu/menu.service';
 import { DialogThemeSelectComponent } from './dialog-theme-select/dialog-theme-select.component';
@@ -28,14 +29,32 @@ export class HeaderComponent implements OnInit {
     public authService: AuthService,
     public menuService: MenuService,
     public themeService: ThemeService,
+    public itemService: ItemService,
     private snackbar: MatSnackBar,
     public dialog: MatDialog) {
+    this.menuService.setMenu(MenuIndexs.WIKI, {
+      name: 'Wiki',
+    });
+    this.menuService.addElement(MenuIndexs.WIKI, {
+      name: 'Overview',
+      routerLink: '/c',
+    });
+    this.itemService.getCategorys({ }).subscribe(items => {
+      for (const item of items) {
+        this.menuService.addElement(MenuIndexs.WIKI, {
+          name: item.name,
+          routerLink: '/c/' + item.name,
+        });
+      }
+    });
+
     this.menuService.setMenu(MenuIndexs.THEME, {
       name: undefined, icon: "format_color_fill", click: (() => {
         const dialogTheme = this.dialog.open(DialogThemeSelectComponent);
         dialogTheme.componentInstance.themeService = this.themeService;
       }).bind(this)
     });
+
     this.menuService.setMenu(MenuIndexs.SETTINGS, {
       name: undefined,
       icon: 'settings',

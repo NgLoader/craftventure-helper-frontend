@@ -18,6 +18,10 @@ const routes: Routes = [
               loadChildren: () => import('./users/users.module').then(child => child.UsersModule)
           },
           {
+              path: 'images',
+              loadChildren: () => import('./images/images.module').then(child => child.ImagesModule)
+          },
+          {
               path: 'audit-log',
               loadChildren: () => import('./audit-log/audit-log.module').then(child => child.AuditLogModule)
           }

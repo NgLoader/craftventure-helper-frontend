@@ -24,6 +24,13 @@ interface SearchOptions {
 	_id?: string;
 }
 
+export interface SearchGlobalOptions extends SearchOptions {
+	page?: number,
+	limit?: number,
+	type?: string;
+	input: string;
+}
+
 export interface SearchCategoryOptions extends SearchOptions {
 	_parentId?: string;
 }
@@ -60,6 +67,22 @@ export abstract class ContentService<Category extends ICategory, Element extends
 	constructor(
 		protected readonly httpClient: HttpClient
 	) { }
+
+	abstract _getSearch(search: SearchGlobalOptions): Observable<Response>;
+	getSearch(search: SearchGlobalOptions): Observable<IContent<Category, Element>> {
+		return this._getSearch(search)
+		.pipe(
+			map(result => {
+				if (result) {
+					if (!result.success) {
+						throwError(result.errors ? JSON.stringify(result.errors) : 'Unknown error!');
+					}
+
+					return result.content as IContent<Category, Element>;
+				}
+			})
+		);
+	}
 
 	abstract _getIdForPath(path: string[]): Observable<Response>;
 	getIdForPath(path: string[]): Observable<{ id: string, element: Element }> {

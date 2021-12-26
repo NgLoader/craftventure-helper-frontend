@@ -19,4 +19,9 @@ export class ApiService {
   public static readonly postSettingEvent: string = `${ApiService.DOMAIN}/setting/event`;
   public static readonly postSettingEventUpdate: string = `${ApiService.DOMAIN}/setting/event/update`;
   public static readonly postSettingEventDelete: string = `${ApiService.DOMAIN}/setting/event/delete`;
+
+  public static readonly postImage: string = `${ApiService.DOMAIN}/images`;
+  public static readonly deleteImage: string = `${ApiService.DOMAIN}/images/delete`;
+  public static readonly postImageSearch: string = `${ApiService.DOMAIN}/images/search`;
+  public static readonly getImage: string = `${ApiService.DOMAIN}/image`;
 }
