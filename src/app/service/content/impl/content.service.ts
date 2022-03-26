@@ -30,8 +30,12 @@ export abstract class ItemService extends ContentService<ItemCategory, Item> {
 		return this.httpClient.post<Response>(`${ApiService.DOMAIN}/${ItemService.ROUTE_ELEMENT}/path`, { path });
 	}
 
+	_getPathForId(categoryId: string): Observable<Response> {
+		return this.httpClient.post<Response>(`${ApiService.DOMAIN}/${ItemService.ROUTE_ELEMENT}/pathid`, { id: categoryId });
+	}
+
 	_getSearch(search: SearchGlobalOptions): Observable<Response> {
-		return this.httpClient.post<Response>(`${ApiService.DOMAIN}/${ItemService.ROUTE_ELEMENT}/search`, { search });
+		return this.httpClient.post<Response>(`${ApiService.DOMAIN}/${ItemService.ROUTE_ELEMENT}/search`, search);
 	}
 
 	_getCategorys(options: SearchElementOptions): Observable<Response> {

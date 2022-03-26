@@ -3,6 +3,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError, zip } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
+export interface PathInfo {
+	id: string,
+	parentId: string,
+	name: string
+}
+
 export interface IElement {
 	_id?: string;
 	_categoryId?: string;
@@ -39,18 +45,18 @@ export interface SearchElementOptions extends SearchOptions {
 	_categoryId?: string;
 }
 
-interface StoreValue<T> {
-	[value: string]: {
-		behaviorSubject: BehaviorSubject<T>,
-		$observable: Observable<T>
-	}
-}
-
 export interface Response {
 	success: boolean;
 	errors: { msg: string }[];
 
 	content: any;
+}
+
+interface StoreValue<T> {
+	[value: string]: {
+		behaviorSubject: BehaviorSubject<T>,
+		$observable: Observable<T>
+	}
 }
 
 @Injectable({
@@ -79,6 +85,22 @@ export abstract class ContentService<Category extends ICategory, Element extends
 					}
 
 					return result.content as IContent<Category, Element>;
+				}
+			})
+		);
+	}
+
+	abstract _getPathForId(categoryId: string): Observable<Response>;
+	getPathForId(categoryId: string): Observable<PathInfo[]> {
+		return this._getPathForId(categoryId)
+		.pipe(
+			map(result => {
+				if (result) {
+					if (!result.success) {
+						throwError(result.errors ? JSON.stringify(result.errors) : 'Unknown error!');
+					}
+
+					return result.content as PathInfo[];
 				}
 			})
 		);

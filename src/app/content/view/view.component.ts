@@ -94,13 +94,19 @@ export class ViewComponent implements OnInit {
     },{
       name: 'Description',
       leftClick: (() => {
-        /*
         import('./update-description-dialog/update-description-dialog.module')
           .then(importedModule => importedModule.UpdateDescriptionDialogModule)
           .then(moduleType => this.dialog.open(moduleType.component))
           .then(ref => {
+            ref.componentInstance.setHtml(this.element.description);
+            ref.afterClosed().subscribe(dialog => {
+              if (dialog) {
+                this.element.description = ref.componentInstance.html || "";
+                this.itemService.updateElement(this.element._id, this.element).subscribe();
+              }
+            });
           });
-          */
+         /*
         const dialog = this.dialog.open(DialogFormComponent);
         dialog.componentInstance.title = "Edit description";
         dialog.componentInstance.fields = [{
@@ -115,6 +121,7 @@ export class ViewComponent implements OnInit {
           this.itemService.updateElement(this.element._id, this.element).subscribe();
           dialog.close();
         }
+      */
       }).bind(this)
     },{
       name: 'Video',

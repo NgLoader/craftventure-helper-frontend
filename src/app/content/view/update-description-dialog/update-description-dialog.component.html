@@ -1,4 +1,8 @@
-<form class="form">
-    <mat-label>Update description</mat-label>
-    <textarea froalaEditor [(froalaModel)]="froalaValue"></textarea>
-</form>
+<h2 mat-dialog-title>Update description</h2>
+<mat-dialog-content class="mat-typography">
+  <quill-editor #quill (onContentChanged)="onContentChanged($event)" modules="">{{html}}</quill-editor>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Update</button>
+</mat-dialog-actions>

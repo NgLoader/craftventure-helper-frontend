@@ -11,9 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatSelectModule } from '@angular/material/select';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import 'froala-editor/js/plugins.pkgd.min.js';
 
 @NgModule({
   declarations: [DialogFormComponent],
@@ -29,8 +27,6 @@ import 'froala-editor/js/plugins.pkgd.min.js';
     MatCheckboxModule,
     MatSelectModule,
     DragDropModule,
-    FroalaEditorModule,
-    FroalaViewModule,
     FormsModule,
     ReactiveFormsModule
   ],

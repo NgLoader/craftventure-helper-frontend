@@ -1,14 +1,22 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs-compat';
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { ItemService } from 'src/app/service/content/impl/content.service';
 import { ThemeService } from 'src/app/service/theme.service';
 import { MenuIndexs, MenuService } from '../../service/menu/menu.service';
 import { DialogThemeSelectComponent } from './dialog-theme-select/dialog-theme-select.component';
+
+interface InputValue {
+  id: string,
+  categoryId: string,
+  type: string,
+  name: string
+}
 
 @Component({
   selector: 'app-header',
@@ -17,15 +25,19 @@ import { DialogThemeSelectComponent } from './dialog-theme-select/dialog-theme-s
 })
 export class HeaderComponent implements OnInit {
 
+  public screenSize = document.body.offsetWidth;
+
   public searchbarVisiblity: boolean = true;
   public searchbarValue: string = "";
   public searchbarUpdate: EventEmitter<string> = new EventEmitter();
 
   public searchbarControl = new FormControl();
-  public searchbarOptions: string[] = ['category: ', 'name: ', 'place: '];
-  public searchbarFilteredOptions: Observable<string[]>;
+  public searchbarFilteredOptions: Observable<InputValue[]>;
+
+  private searchRequest: Subscription;
 
   constructor(
+    private router: Router,
     public authService: AuthService,
     public menuService: MenuService,
     public themeService: ThemeService,
@@ -90,15 +102,50 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.searchbarFilteredOptions = this.searchbarControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this.searchbarFilter(value))
-      );
+    const subject = new BehaviorSubject<InputValue[]>([]);
+    this.searchbarFilteredOptions = subject.asObservable();
+    this.searchbarControl.valueChanges
+      .subscribe(value => {
+        if (this.searchRequest) {
+          this.searchRequest.unsubscribe();
+        }
+        if (value && value.length > 0) {
+          this.searchRequest = this.itemService.getSearch({ input: value }).subscribe(result => {
+            const values: InputValue[] = [];
+            result.categorys.forEach(cateogry => values.push({
+              id: cateogry._id,
+              categoryId: undefined,
+              type: 'category',
+              name: cateogry.name
+            }));
+            result.elements.forEach(element => values.push({
+              id: element._id,
+              categoryId: element._categoryId,
+              type: 'element',
+              name: element.name
+            }));
+            subject.next(values);
+          });
+        } else {
+          subject.next([]);
+        }
+      });
+
+      const screenSizeChanged = Observable.fromEvent(window, 'resize').throttleTime(500);
+      screenSizeChanged.subscribe(() => {
+        this.screenSize = document.body.offsetWidth;
+      });
   }
 
-  private searchbarFilter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.searchbarOptions.filter(option => option.toLowerCase().includes(filterValue));
+  selectInput(value: InputValue, event: Event) {
+    this.itemService.getPathForId(value.categoryId || value.id).subscribe(result => {
+      const path = ["c"];
+      result.reverse().forEach(result => path.push(result.name));
+      if (value.categoryId) {
+        path.push(value.name);
+        path.push('view');
+      }
+      this.router.navigate(path);
+    });
   }
 }

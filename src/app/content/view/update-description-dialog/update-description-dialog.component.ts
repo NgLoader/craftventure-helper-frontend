@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { ContentChange, QuillEditorBase, QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-update-description-dialog',
@@ -7,15 +8,17 @@ import { Component } from '@angular/core';
 })
 export class UpdateDescriptionDialogComponent {
 
-  froalaValue: string = "";
+  @ViewChild('quill', { static: true }) editor: QuillEditorBase;
 
-  froalaOptions: Object = {
-    charCounterCount: true
-  }
+  public html: string;
 
   constructor() { }
 
-  getFroalaOptions() {
-    return JSON.parse(JSON.stringify(this.froalaOptions))
+  setHtml(html: string) {
+    this.editor.content = html;
+  }
+
+  onContentChanged(event: ContentChange) {
+    this.html = event.html;
   }
 }

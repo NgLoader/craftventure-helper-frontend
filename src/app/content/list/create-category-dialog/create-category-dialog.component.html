@@ -12,6 +12,10 @@
 			<input matInput [(ngModel)]="this.image">
 		</mat-form-field>
 	</div>
+	<div style="display: flex; flex-direction: column;">
+		<input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
+		<button type="button" mat-raised-button (click)="fileInput.click()">Upload Image</button>
+	</div>
 	<div>
 		<mat-form-field>
 			<mat-label>Keywords</mat-label>

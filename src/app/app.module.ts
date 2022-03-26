@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpRequestInterceptor } from './service/httprequest.interceptor';
 import { ShellModule } from './shell/shell.module';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
@@ -19,9 +18,7 @@ import { MatChipsModule } from '@angular/material/chips';
     AppRoutingModule,
     MatSelectModule,
     MatChipsModule,
-    ShellModule,
-    FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot()
+    ShellModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }

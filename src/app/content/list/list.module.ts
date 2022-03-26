@@ -14,14 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { RouterModule } from '@angular/router';
 import { DialogFormModule } from 'src/app/shared/dialog-form/dialog-form.module';
-import { FroalaViewModule } from 'angular-froala-wysiwyg';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { AsyncImageModule } from 'src/app/shared/async-image/async-image.module';
-import { ContentRoutingModule } from '../content-routing.module';
 
 
 

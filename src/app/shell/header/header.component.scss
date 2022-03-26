@@ -1,5 +1,5 @@
 .spacer {
-  flex: 1 1 auto;
+  flex: 1;
 }
 
 mat-toolbar {
@@ -24,14 +24,13 @@ mat-icon {
 }
 
 .search {
-  display: block;
-  position: absolute;
-  width: 100%;
-  padding-right: 32px;
+  display: flex;
   align-content: center;
   text-align: center;
   box-sizing: border-box;
   z-index: 0;
+  flex: 1 1 auto;
+  justify-content: center;
 
   .input {
     width: 470px;
@@ -82,6 +81,7 @@ mat-toolbar {
 	flex-direction: row;
   z-index: 1;
   align-items: center;
+  justify-content: center;
 }
 
 .rotateIcon mat-icon {
@@ -93,13 +93,30 @@ mat-toolbar {
   }
 }
 
-@media screen and (max-width: 720px) {
+.headerMiddle, .headerSmall {
+  display: none;
+}
+
+.middle {
+  display: flex;
+  width: 100%;
+}
+
+@media screen and (max-width: 853px) {
   mat-toolbar {
     height: 112px;
-    flex-direction: column;
+    flex-direction: row;
   }
 
-  .spacer {
+  .search {
+    flex-direction: row;
+  }
+
+  .headerBig {
     display: none;
+  }
+
+  .headerMiddle {
+    display: unset;
   }
 }

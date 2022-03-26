@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ApiService } from 'src/app/service/api/api.service';
 import { ItemService } from 'src/app/service/content/impl/content.service';
 import { ImageViewContentElement } from 'src/app/shared/image-view/image-view.component';
 import { CreateItemDialogComponent } from '../create-item-dialog/create-item-dialog.component';
@@ -22,7 +24,8 @@ export class CreateCategoryDialogComponent implements OnInit {
   enabled: boolean = false;
 
   constructor(
-    private dialogRef: MatDialogRef<CreateItemDialogComponent>
+    private dialogRef: MatDialogRef<CreateItemDialogComponent>,
+		private httpClient: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -88,6 +91,21 @@ export class CreateCategoryDialogComponent implements OnInit {
 
     if (index >= 0) {
       this.keywords.splice(index, 1);
+    }
+  }
+
+  onFileSelected(event: any): void {
+    const files = event.target?.files;
+    if (files && files.length > 0) {
+      const formData = new FormData();
+      formData.append('img', files[0]);
+      this.httpClient.post(ApiService.postImageUpload, formData).subscribe(res => {
+        if (res && res instanceof Array && res.length > 0) {
+          this.image = `${ApiService.getImage}/${res[0].filename}`;
+        }
+      }, error => {
+        console.log(error);
+      });
     }
   }
 }

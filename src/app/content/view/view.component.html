@@ -12,7 +12,7 @@
 				<mat-icon class="tab-icon">account_circle</mat-icon>
 				Description
 			</ng-template>
-			<div class="description" [froalaView]="this.element.description"></div>
+			<quill-view-html [content]="this.element.description" theme="snow"></quill-view-html>
 		</mat-tab>
 		<mat-tab *ngIf="this.displayVideo()">
 			<ng-template mat-tab-label>

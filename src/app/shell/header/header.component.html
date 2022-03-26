@@ -1,63 +1,86 @@
 <mat-toolbar color="primary" class="header">
-    <div class="search" *ngIf="this.searchbarVisiblity">
-        <form>
-            <mat-form-field class="input" appearance="outline">
-                <input type="text"
-                       placeholder="Pick one"
-                       aria-label="Number"
-                       matInput
-                       [formControl]="searchbarControl"
-                       [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let option of searchbarFilteredOptions | async" [value]="option">
-                    {{option}}
-                  </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-        </form>
-    </div>
-    <div class="title" routerLink="/">Craftventure</div>
-    <div class="spacer"></div>
-    <div class="menu">
-        <div *ngFor="let menu of this.menuService.menus">
-            <div *ngIf="menu && !(menu.hidden && menu.hidden())" (click)="menu.click && menu.click()">
-                <div *ngIf="menu.routerLink != undefined">
-                    <button mat-raised-button *ngIf="menu.icon == undefined" [routerLink]="menu.routerLink"
-                        [matTooltip]="menu.tooltip" [class]="menu.class" color="second" matTooltipPosition="below">
-                        <div>{{menu.name}}</div>
-                    </button>
-                    <button mat-icon-button *ngIf="menu.icon != undefined" [routerLink]="menu.routerLink"
-                        [matTooltip]="menu.tooltip" [class]="menu.class" color="second" matTooltipPosition="below">
-                        <mat-icon>{{menu.icon}}</mat-icon>
-                        <span *ngIf="menu.name != undefined">{{menu.name}}</span>
-                    </button>
-                </div>
-                <div *ngIf="menu.routerLink == undefined">
-                    <button mat-raised-button *ngIf="menu.icon == undefined" [matMenuTriggerFor]="menuEvent" [ngClass]="{ 'disabled' : menu.elements == 0 }"
-                        [matTooltip]="menu.tooltip" [class]="menu.class" color="second" matTooltipPosition="below">
-                        <div>{{menu.name}}</div>
-                    </button>
-                    <button mat-icon-button *ngIf="menu.icon != undefined" [matMenuTriggerFor]="menuEvent" [ngClass]="{ 'disabled' : menu.elements == 0 }"
-                        [matTooltip]="menu.tooltip" [class]="menu.class" color="second" matTooltipPosition="below">
-                        <mat-icon>{{menu.icon}}</mat-icon>
-                        <span *ngIf="menu.name != undefined">{{menu.name}}</span>
-                    </button>
-                    <mat-menu #menuEvent="matMenu">
-                        <div *ngFor='let element of menu.elements'>
-                            <button mat-menu-item *ngIf="element && !(element.hidden && element.hidden())"
-                                [matTooltip]="element.tooltip" matTooltipPosition="below"
-                                [routerLink]="element.routerLink != undefined ? [element.routerLink] : []"
-                                [class]="menu.class" (click)='element.click != undefined && element.click()'>
-                                <mat-icon *ngIf="element.icon != undefined">
-                                    <mat-icon>{{element.icon}}</mat-icon>
-                                    <span *ngIf="element.name != undefined">{{element.name}}</span>
-                                </mat-icon>
-                                <div *ngIf="element.icon == undefined">{{element.name}}</div>
-                            </button>
-                        </div>
-                    </mat-menu>
-                </div>
+    <ng-container *ngIf="screenSize > 853">
+        <div class="title" routerLink="/">Craftventure</div>
+        <div class="search">
+            <ng-container *ngTemplateOutlet="searchBar"></ng-container>
+        </div>
+        <div class="menu">
+            <ng-container *ngTemplateOutlet="menu"></ng-container>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="854 > screenSize">
+        <div class="middle">
+            <div class="title" routerLink="/">Craftventure</div>
+            <div class="spacer"></div>
+            <div class="menu">
+                <ng-container *ngTemplateOutlet="menu"></ng-container>
+            </div>
+        </div>
+        <div class="search">
+            <ng-container *ngTemplateOutlet="searchBar"></ng-container>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="screenSize < 200">
+        <div class="title" routerLink="/">Craftventure3</div>
+    </ng-container>
+</mat-toolbar>
+
+<ng-template #menu>
+    <div *ngFor="let menu of this.menuService.menus">
+        <div *ngIf="menu && !(menu.hidden && menu.hidden())" (click)="menu.click && menu.click()">
+            <div *ngIf="menu.routerLink != undefined">
+                <button mat-raised-button *ngIf="menu.icon == undefined" [routerLink]="menu.routerLink"
+                    [matTooltip]="menu.tooltip" [class]="menu.class" color="second" matTooltipPosition="below">
+                    <div>{{menu.name}}</div>
+                </button>
+                <button mat-icon-button *ngIf="menu.icon != undefined" [routerLink]="menu.routerLink"
+                    [matTooltip]="menu.tooltip" [class]="menu.class" color="second" matTooltipPosition="below">
+                    <mat-icon>{{menu.icon}}</mat-icon>
+                    <span *ngIf="menu.name != undefined">{{menu.name}}</span>
+                </button>
+            </div>
+            <div *ngIf="menu.routerLink == undefined">
+                <button mat-raised-button *ngIf="menu.icon == undefined" [matMenuTriggerFor]="menuEvent" [ngClass]="{ 'disabled' : menu.elements == 0 }"
+                    [matTooltip]="menu.tooltip" [class]="menu.class" color="second" matTooltipPosition="below">
+                    <div>{{menu.name}}</div>
+                </button>
+                <button mat-icon-button *ngIf="menu.icon != undefined" [matMenuTriggerFor]="menuEvent" [ngClass]="{ 'disabled' : menu.elements == 0 }"
+                    [matTooltip]="menu.tooltip" [class]="menu.class" color="second" matTooltipPosition="below">
+                    <mat-icon>{{menu.icon}}</mat-icon>
+                    <span *ngIf="menu.name != undefined">{{menu.name}}</span>
+                </button>
+                <mat-menu #menuEvent="matMenu">
+                    <div *ngFor='let element of menu.elements'>
+                        <button mat-menu-item *ngIf="element && !(element.hidden && element.hidden())"
+                            [matTooltip]="element.tooltip" matTooltipPosition="below"
+                            [routerLink]="element.routerLink != undefined ? [element.routerLink] : []"
+                            [class]="menu.class" (click)='element.click != undefined && element.click()'>
+                            <mat-icon *ngIf="element.icon != undefined">
+                                <mat-icon>{{element.icon}}</mat-icon>
+                                <span *ngIf="element.name != undefined">{{element.name}}</span>
+                            </mat-icon>
+                            <div *ngIf="element.icon == undefined">{{element.name}}</div>
+                        </button>
+                    </div>
+                </mat-menu>
             </div>
         </div>
     </div>
-</mat-toolbar>
+</ng-template>
+<ng-template #searchBar>
+    <form>
+        <mat-form-field class="input" appearance="outline">
+            <input type="text"
+                   placeholder="Search..."
+                   aria-label="Number"
+                   matInput
+                   [formControl]="searchbarControl"
+                   [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of searchbarFilteredOptions | async" (click)="selectInput(option, $event)">
+                {{(option.type == 'category' ? 'Category: ' : 'Element: ') + option.name}}
+              </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+</ng-template>
